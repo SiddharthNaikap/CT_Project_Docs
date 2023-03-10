@@ -1,0 +1,246 @@
+Prop Drilling Solution:
+##############################
+import React, { useState, useContext } from "react";
+
+let context = React.createContext(null);
+function Parent() {
+const [fName, setfName] = useState("firstName");
+const [lName, setlName] = useState("LastName");
+return (
+	<context.Provider value={{ fName, lName }}>
+	<div>This is a Parent component</div>
+	<br />
+	<ChildA />
+	</context.Provider>
+);
+}
+function ChildA() {
+return (
+	<>
+	This is ChildA Component.
+	<br />
+	<ChildB />
+	</>
+);
+}
+function ChildB() {
+return (
+	<>
+	This is ChildB Component.
+	<br />
+	<ChildC />
+	</>
+);
+}
+
+function ChildC() {
+const { fName, lName } = useContext(context);
+return (
+	<>
+	This is ChildC component.
+	<br />
+	<h3> Data from Parent component is as follows:</h3>
+	<h4>{fName}</h4>
+	<h4>{lName}</h4>
+	</>
+);
+}
+
+export default Parent;
+
+useReducer hooks:
+####################
+import React,{useReducer} from 'react'
+
+const InitialData=[
+    {
+        id:1,
+        title:"Buy Groceries",
+        completed:false
+    },
+    {
+        id:2,
+        title:"Read Books",
+        completed:false
+    },
+    {
+        id:3,
+        title:"Cooking Food",
+        completed:true
+    }
+]
+
+const reducer =(state,action)=>{
+
+    switch(action.type){
+        case 'COMPLETE':
+            return state.map((todo) => {
+                if (todo.id === action.id) {
+                  return { ...todo, completed: !todo.completed };
+                } else {
+                  return todo;
+                }
+            })
+        default:
+            return state
+
+    }
+
+}
+
+export default function UseReducerHooks() {
+
+    const [todos,dispatch]=useReducer(reducer,InitialData)
+
+    const hanldleComplete =(todos)=>{
+        dispatch({type:"COMPLETE",id:todos.id})
+    }
+
+    return (
+        <div>
+            {
+                todos.map((todo)=>(
+                    <div id={todo.id}>
+                    <input type="checkbox" checked={todo.completed} onChange={()=>hanldleComplete(todo)}/>
+                    {todo.title}
+                    </div>
+                ))
+            }
+        </div>
+    )
+}
+
+Why do we use arrow function in react?
+#################################
+Arrow functions don’t redefine the value of this within their function body. 
+This makes it a lot easier to predict their behavior when passed as callbacks, 
+and prevents bugs caused by use of this within callbacks.
+
+With a standard function expression or declaration in Javascript, the definition 
+of 'this' is dependent on where the function was called. 
+
+As a result in order to ensure that 'this' is acting on the correct object or 
+class you may need to use the bind method to ensure the 'this' keyword maintains the correct reference.
+it doesn’t change the context of this keyword, so you don’t need to bind at all:
+
+Simple Test function:
+####################
+describe('test MyComponent', () => {
+    const wrapper = mount(<MyComponent />);
+    const table = wrapper.find('table');
+    const col3 = table.find('.classname-of-last-column')
+    it('Check if number’, () => {
+        expect(col3). text().not.toBeNaN();
+    });
+});
+
+Promises Exmple:
+#####################
+readFilePromise()
+    .then(function(res) {
+        console.log('Res ', JSON.parse(res))
+        return promise
+    })
+    .then()
+    .then()
+    .catch(function(error) {
+        console.log('error ', error)
+    })
+------------------
+const myPromise = new Promise((resolve, reject) => {
+    if (Math.random()  > 0) {
+        console.log('resolving the promise ...');
+        resolve('Hello, Positive :)');
+    }
+    reject(new Error('No place for Negative here :('));
+});
+  
+myPromise.then((fulfilledValue) => {
+    console.log(fulfilledValue);
+}}).catch(err => console.log(err));
+
+
+Callback hell:
+################
+asyncFunction(function(){
+    asyncFunction(function(){
+        asyncFunction(function(){
+            asyncFunction(function(){
+                asyncFunction(function(){
+                    ....
+                });
+            });
+        });
+    });
+});
+
+Callback function Example:
+#######################
+function myDisplayer(some) {
+  document.getElementById("demo").innerHTML = some;
+}
+function myCalculator(num1, num2, myCallback) {
+  let sum = num1 + num2;
+  myCallback(sum);
+}
+myCalculator(5, 5, myDisplayer);
+
+Template Literals
+###################
+const a = 5;
+const b = 10;
+console.log(`Fifteen is ${a + b} and
+not ${2 * a + b}.`);
+// "Fifteen is 15 and
+// not 20."
+
+Rest Operator:
+################
+function restTest(one, two, ...args) {
+  console.log(one)
+  console.log(two)
+  console.log(args)
+}
+
+restTest(1, 2, 3, 4, 5, 6)
+
+Spread Operator:
+##############
+Assign the first and second items from numbers to variables 
+and put the rest in an array:
+
+const numbers = [1, 2, 3, 4, 5, 6];
+
+const [one, two, ...rest] = numbers;
+---------------------------------------
+Combine these two objects:
+
+const myVehicle = {
+  brand: 'Ford',
+  model: 'Mustang',
+  color: 'red'
+}
+
+const updateMyVehicle = {
+  type: 'car',
+  year: 2021, 
+  color: 'yellow'
+}
+
+const myUpdatedVehicle = {...myVehicle, ...updateMyVehicle}
+
+Destructoring Assignment
+##########################
+let a, b, rest;
+
+[a, b, ...rest] = [10, 20, 30, 40, 50];
+
+console.log(rest);
+// expected output: Array [30,40,50]
+
+console.log(a);
+// expected output: 10
+
+console.log(b);
+// expected output: 20
+

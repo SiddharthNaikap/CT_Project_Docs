@@ -1,0 +1,37 @@
+1. In react how do you manage style(css) in component?
+2. How do you manage component style, for example you create a component for button/grid.css?
+3. How do you handle API calls in your react application? explain Ajax, Axios and interceptor?
+4. How to handle API response as consider a example like login page as example user enter credentials and click on the submit button
+call API and get responses as success or error? In where to handle error in response?
+5. Handle 405, 404 and 403 error response
+6. How to handle multiple API call, for example login API will have successfully submitted after getting more consecutive 3 APIs success response. What is your approach to implementing that scenarios. 
+(async - await, fetch - .then, .then, .then... and promise.all)
+7. In a fetch - .then, .then, .then... API scenarios suppose 1st API call success and get the response then call 2nd API it will failed. After that what will happened about the 3rd API call it will work or not? and which error we will get?
+8. In the same scenario what happens in promise.all(), it will reject or calls the APIs?
+9. Life cycle of React - Virtual DOM, Performance level and state management
+10. In nested component (parent - child component) if changing on the parent component then child component will also re-render or not? If yes How can we prevent child re-rendering and why it's important?
+(read - higher order component, pure-component, should-component level life cycle, Memo/Strict Mode)
+11. How to store data in deep child level scenario for high-level? Explain Redux and use cases?
+12. What is Context-API? Difference between Redux and context API?
+13. What is middle-ware? how it's work in React-Auth scenario?
+14. Do you have Idea about deployment of react-app on google cloud or AWS?
+
+______________________________________________
+
+1. What are the advantages of using React?
+2. What is JSX?
+3. What are the differences between functional and class components?
+4. What is the virtual DOM? How does react use the virtual DOM to render the UI?
+5. What are the differences between controlled and uncontrolled components?
+6. What are the different lifecycle methods in React?
+7. Explain Strict Mode in React.
+8. How to prevent re-renders in React?
+9. Explain React state and props.
+10. Explain React Hooks.
+11. What are the different ways to style a React component?
+12. Name a few techniques to optimize React app performance.
+13. What are keys in React? How to pass data between react components?
+14. What are Higher Order Components?
+15. What is prop drilling in React?
+16. What are error boundaries?
+
