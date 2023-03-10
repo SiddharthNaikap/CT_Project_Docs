@@ -1,0 +1,7 @@
+City,Day,Temperature,Wind_Speed,Event
+Bangalore,1/5/2022,34.5,,Rain
+Mysore,1/6/2022,36,2.5,Sunny
+Mangalore,1/7/2022,37.2,3.5,Rain
+Mysore,1/8/2022,,4.6,
+Mangalore,1/9/2022,26,1.4,
+Bangalore,1/10/2022,13,5.6,Sunny
