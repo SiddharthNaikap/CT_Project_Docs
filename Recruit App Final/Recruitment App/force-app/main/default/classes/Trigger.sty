@@ -1,0 +1,199 @@
+Trigger 
+############
+trigger AllOpenTasksCase on Case (before delete) {
+    
+    List<Task> tasks = new List<Task>();
+    tasks = [Select id,whatId from Task where what.type='Case' and Status!='Completed'];
+    Set<String> openTasks=new Set<String>();
+    
+    for(Task ts:tasks){
+        openTasks.add(ts.whatId);
+    }
+   // system.debug(openTasks);
+    
+    for(Case cases:Trigger.old){ 
+        if(openTasks.contains(cases.id)){
+            //system.debug('Matching Case Id '+cases.id);
+            cases.addError('Cannot Delete Case(s), as the Task(s) are open');
+        }
+        
+    }
+
+}
+###################################
+trigger OpenTasksOnCase on Case (before delete) {
+//    System.debug(Trigger.Old);
+OpenTasksOnCaseHandler.checkTaskOpenForCase(Trigger.Old);
+}
+
+public with sharing class OpenTasksOnCaseHandler {
+
+public static void checkTaskOpenForCase(List<Case> caseToDelete)
+{
+try
+{
+ List<Case> allCaseHavingTask=new List<Case>();
+ List<Task> openTasks = new List<Task>();
+ openTasks = [select id, whatId from task where what.type = 'Case' and Status !='Completed'];
+ 
+   for(Task open:openTasks){
+    if(open.whatId==caseToDelete[0].Id){
+        System.debug('Open Taks Found');
+        caseToDelete[0].addError('Cant delete this Case because it has open task');
+    } 
+    else{
+        System.debug('No Open Taks');
+    }
+}
+ } 
+catch(Exception e)
+{
+System.debug(e);
+}
+}
+}
+
+###########################################################
+
+Trigger OpenTasksOnCase on Case (before Delete)
+{
+OpenTasksOnCaseHandler.checkTaskOpenForCase(Trigger.Old);
+}
+
+public with sharing class OpenTasksOnCaseHandler
+{
+public static void checkTaskOpenForCase(List<Case> allcases)
+{
+try
+{
+ List<Case> allCaseHavingTask=new List<Case>();
+ 
+ for(Case c:allcases)
+ {
+  if(c.Task__c!=null)
+  {
+    allCaseHavingTask.add(c);
+    c.addError('Cant delete this Case because it has open task');
+  }
+ }
+ 
+
+catch(Exception e)
+{
+System.debug(e);
+}
+}
+}
+#############################
+trigger BeforeInsertAccount on Account (before insert) {
+
+    for(Account acc:Trigger.new){
+        if(acc.Industry=='Healthcare'){
+            acc.Rating='Hot';
+        }
+    }
+}
+###########################
+Trigger CreateContactAccount on Contact (after insert) {
+    
+    List<Account> accountsToInsert = new List<Account>();
+    
+    for(Contact con:Trigger.new){
+        if(con.AccountId==null){
+            Account newAcc= new Account(
+            Name=con.FirstName,
+            Phone=con.Phone
+            );
+           accountsToInsert.add(newAcc);
+        }
+    }
+    insert(accountsToInsert);
+
+}
+#############################
+
+Triggers Best Practices :
+
+1) One Trigger Per Object
+A single Apex Trigger is all you need for one particular object. I
+f you develop multiple Triggers for a single object, you have no way of controlling the order of execution if those Triggers 
+can run in the same contexts
+
+2) Logic-less Triggers
+If you write methods in your Triggers, those can’t be exposed for test purposes. 
+You also can’t expose logic to be re-used anywhere else in your org.
+
+2. Trigger Helper Class Pattern:
+According to “Best Practices” suggested by Salesforce, we should always use a Helper Class (Apex Class) with a Trigger.
+It is a design pattern which makes it easy to maintain the code in the long term.
+
+Trigger accUpdate on Account (before insert, after insert, before update, after update)
+{
+if(Trigger.isBefore)
+{
+if(Trigger.isInsert) {
+AccTriggerHelper.firstMethod(Trigger.new); }
+}
+}
+
+public with sharing class AccTriggerHelper(){
+
+    public static void firstMethod(List<Account> acc){
+
+    }
+}
+
+3) Context-Specific Handler Methods
+Create context-specific handler methods in Trigger handlers
+
+4) Bulkify your Code
+Bulkifying Apex code refers to the concept of making sure the code properly handles more than one record at a time.
+
+Create Triggers that use loops to help iterate over a list of records within a transaction:
+
+trigger testTrigger on Acount__c (before insert) {
+
+    integer i = 1;
+
+    for(Acount__c acc : Trigger.new){ 
+
+acc.Address__c = ‘Test Address ‘+i;
+
+        i++;
+
+}
+
+}
+
+5) Avoid SOQL Queries or DML statements inside FOR Loops
+An individual Apex request gets a maximum of 100 SOQL queries before exceeding that governor limit. 
+So if this trigger is invoked by a batch of more than 100 Account records, the governor limit will throw a runtime exception
+
+6) Using Collections, Streamlining Queries, and Efficient For Loops
+It is important to use Apex Collections to efficiently query data and store the data in memory. A combination of using collections and streamlining SOQL queries can substantially help writing efficient Apex code and avoid governor limits
+
+7) Querying Large Data Sets
+The total number of records that can be returned by SOQL queries in a request is 50,000. If returning a large set of queries causes you to exceed your heap limit, then a SOQL query for loop must be used instead. It can process multiple batches of records through the use of internal calls to query and queryMore
+
+8) Use @future Appropriately
+It is critical to write your Apex code to efficiently handle bulk or many records at a time. This is also true for asynchronous Apex methods (those annotated with the @future keyword). The differences between synchronous and asynchronous Apex can be found
+
+9) Avoid Hardcoding IDs
+When deploying Apex code between sandbox and production environments, or installing Force.com AppExchange packages, it is essential to avoid hardcoding IDs in the Apex code. By doing so, if the record IDs change between environments, the logic can dynamically identify the proper data to operate against and not fail.
+
+Few more Best Practices for Triggers
+There should only be one trigger for each object.
+Avoid complex logic in triggers. To simplify testing and resuse, triggers should delegate to Apex classes which contain the actual execution logic. See Mike Leach's excellent trigger template for more info.
+Bulkify any "helper" classes and/or methods.
+Trigers should be "bulkified" and be able to process up to 200 records for each call.
+Execute DML statements using collections instead of individual records per DML statement.
+Use Collections in SOQL "WHERE" clauses to retrieve all records back in single query
+Use a consistent naming convention including the object name (e.g., AccountTrigger)
+
+
+
+Security 
+apex..
+Testing
+Flows..
+Vs page

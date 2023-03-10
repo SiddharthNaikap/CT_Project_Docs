@@ -1,0 +1,58 @@
+<template>
+    <div class="card-border">
+        <template if:false={viewInsert}>
+        <div class="add-skill">
+        <lightning-button  variant="brand" icon-name="utility:new" label="Add an additional Skill" title="Add a new Skill" onclick={handleClick}></lightning-button>
+    </div>
+        </template>
+        <template if:true ={viewInsert}>
+            <lightning-layout   multiple-rows>
+            <lightning-layout-item size="3" padding="around-small" small-device-size="12" medium-device-size="3" large-device-size="3" >
+                    <lightning-input type="text" variant="standard" value={skillName} name="skillName" placeholder="Enter Additional Skill Name" onchange={handleSkillChange}></lightning-input>
+              </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small" small-device-size="12" medium-device-size="3" large-device-size="3">
+                  <lightning-combobox
+                    name="skillRating"
+                    value={skillRating}
+                    placeholder="Select Skill Rating"
+                    options={options}
+                    onchange={handleRatingChange} ></lightning-combobox>
+                  </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small" small-device-size="12" medium-device-size="3" large-device-size="3">
+                     <lightning-input type="text" name="skillComments" placeholder="Enter Comments(if any)" value={skillComments} onchange={handleCommentChange} ></lightning-input>
+                 </lightning-layout-item>
+            <lightning-layout-item size="3" padding="around-small" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <div class="div-buttons">
+                <lightning-button class="insert-button" variant="brand" icon-name="utility:save" label="Add" title="Add" onclick={handleInsert}></lightning-button>
+                <lightning-button  class="insert-button" variant="brand" icon-name="utility:delete" label="Clear" title="Clear" onclick={clearData}></lightning-button>
+                <lightning-button  class="insert-button" variant="destructive" icon-name="utility:close" label="Close" title="Close" onclick={handleClose}></lightning-button>
+             </div>    
+             </lightning-layout-item>
+            </lightning-layout>
+            </template>
+    </div>
+
+      <c-candidate-skill-feedback record-id={recordId}></c-candidate-skill-feedback>
+    <div class="card-border">
+    <lightning-card  class="div-class " variant="brand"  title="Rate on additional skills" icon-name="custom:custom30">
+       
+        <div class="card-border">
+
+      
+      <div class="slds-m-around_xx-small ">
+        <lightning-datatable
+            key-field="Id"
+            data={skillData}
+            show-row-number-column
+            hide-checkbox-column
+            draft-values={draftValues}
+            onsave={handleSave}
+            columns={columns}
+            ></lightning-datatable>
+        </div>
+
+    </div>
+    
+    </lightning-card>
+</div>
+</template>

@@ -1,0 +1,13 @@
+.div-class{
+
+    font-size:13px;
+    min-height:100px;
+    margin:10px;
+}
+.card-border{
+    font-size:13px;
+    border:2px solid rgb(204, 203, 203);
+    border-radius: 5px;
+    min-height:100px;
+    padding:10px;
+  }
