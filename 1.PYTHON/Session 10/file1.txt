@@ -1,0 +1,2 @@
+hi,hello,sam,gi
+ram,dev,go,yet

@@ -1,0 +1,2 @@
+go,to,hello,rai
+for,name,bro,goal
