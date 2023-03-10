@@ -1,0 +1,53 @@
+.card-border{
+    border:3px solid rgb(204, 203, 203);
+    border-radius: 5px;
+    min-height:70px;
+    padding:10px;
+    text-align:center;
+    background-color: rgb(247, 247, 247);
+    /* font: size 18; */
+  }
+  .main-head{
+      font-size: medium;
+      font-weight: bold;
+      color:rgb(8, 6, 17);
+  }
+  .data-table{
+    margin:15px;
+    }
+  .sub-head{
+      font-size: x-large;
+      color:rgb(45, 9, 102);
+      font-weight: bold;
+  }
+  .slds-modal__container{
+    max-width: 80rem !important;
+    width:95% !important;
+    /* max-height: 70rem !important; */
+    height:110% !important;
+}
+.modal-sub{
+    border:2px solid rgb(204, 203, 203);
+    border-radius: 7px;
+    min-height:200px;
+    padding:10px;
+    margin:auto;
+    /* margin-right:5px; */
+    /* text-align:center; */
+}
+.card-title{
+  font-size:x-large;
+}
+.card-subtitle{
+  font-size: 13px;
+}
+.message-box{
+    font-size:16px;
+    padding:10px;
+    margin:auto;
+    /* border:1px solid rgb(204, 203, 203); */
+    font-style:italic;
+    text-align:center;
+    color:rgb(0, 0, 0);
+    text-shadow: 0px 0px 1px #0c0c0c;
+  }

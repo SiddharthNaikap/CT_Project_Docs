@@ -1,0 +1,49 @@
+<template>
+<div>
+
+ <div class="slds-m-around_xx-small div-style">
+<lightning-card  variant="narrow"  title="Choose an Open Position" icon-name="standard:account" >
+    <lightning-combobox
+    name="openPosition"
+    value={positionValue}
+    placeholder="Open Position (Minimum Exp. in Years)"
+    options={posData}
+    onchange={handleChange} >
+</lightning-combobox>
+<!-- <p>Selected value is: {value}</p> -->
+</lightning-card>
+</div>
+
+<div class="slds-m-around_xx-small div-style">
+<lightning-card  variant="Narrow"  title="Profile Skillset" icon-name="custom:custom30">
+    <!-- <template if:true={skillData}>
+        <template for:each={skillData} for:item="skill">
+            <p key={skill.Id}>{skill}</p>
+        </template>
+    </template> -->
+    <lightning-datatable
+        key-field="id"
+        data={skillData}
+        show-row-number-column
+        hide-checkbox-column
+        columns={columns}>
+    </lightning-datatable>
+</lightning-card>
+</div>
+</div>
+<lightning-card  variant="Narrow"  title="Candidate List" icon-name="standard:account">
+    <div class="apply-selected">
+    <lightning-button  variant="success" label="Apply Selected" ></lightning-button>
+    </div>
+    <div class="slds-m-around_xx-small">
+    <lightning-datatable
+        key-field="Id"
+        data={candidateData}
+        show-row-number-column
+        row-number-offset={rowOffset}
+        columns={candidateColumn}
+        onrowaction={callRowAction}>
+    </lightning-datatable>
+</div>
+</lightning-card>
+</template>

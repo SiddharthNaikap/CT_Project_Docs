@@ -1,0 +1,70 @@
+<template>
+
+    <lightning-card  variant="Narrow" >
+        <lightning-layout multiple-rows>
+            <lightning-layout-item size="6" small-device-size="3" medium-device-size="6" large-device-size="6" >
+                <div class="slds-m-around_xx-small card-border">
+                    <lightning-card  variant="narrow"  title="Choose an Open Position" icon-name="standard:account" >
+                        <lightning-combobox
+                        name="openPosition"
+                        value={positionValue}
+                        placeholder="Open Position (Minimum Exp. in Years)"
+                        options={posData}
+                        onchange={handleChange} >
+                    </lightning-combobox>
+                    <!-- <p>Selected value is: {value}</p> -->
+                    </lightning-card>
+                    </div>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" small-device-size="3" medium-device-size="6" large-device-size="6">
+                <div class="slds-m-around_xx-small card-border">
+                    <lightning-card  variant="Narrow"  title="Position Skillset" icon-name="custom:custom30">
+                        <lightning-datatable
+                            key-field="id"
+                            data={skillData}
+                            show-row-number-column
+                            hide-checkbox-column
+                            columns={columns}>
+                        </lightning-datatable>
+                    </lightning-card>
+                    </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+  
+    
+    <div class="data-table">
+    
+    </div>
+    
+    <lightning-card   variant="Narrow"  title="Candidate List" icon-name="standard:contact">
+        <div class="slds-m-around_xx-small card-border">
+        <!-- <div class="apply-selected">
+        <lightning-button  variant="success" label="Apply Selected" ></lightning-button>
+        </div> -->
+        <div class="slds-m-around_xx-small">                 
+                <lightning-button label="Apply Selected"
+                                  icon-name="utility:save"
+                                  disabled={isTrue}
+                                  variant="success" 
+                                  onclick={applySelected}
+                                  style="margin-bottom:15px">
+                                </lightning-button>
+        </div>
+
+        
+        <lightning-datatable
+            class="dataTable"
+            key-field="Id"
+            data={candidateData}
+            show-row-number-column
+            row-number-offset={rowOffset}
+            columns={candidateColumn}
+            onrowaction={callRowAction}
+            onrowselection={getSelectedRecords}>
+        </lightning-datatable>
+    </div>
+    </lightning-card>
+   
+
+    </template>

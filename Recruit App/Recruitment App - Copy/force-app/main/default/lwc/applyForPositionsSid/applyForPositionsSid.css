@@ -1,0 +1,14 @@
+.apply-selected{
+
+  margin:5px;
+    font-Size:14px;
+}
+.data-table{
+margin:15px;
+}
+.card-border{
+  border:2px solid rgb(204, 203, 203);
+  border-radius: 5px;
+  min-height:150px;
+  padding:10px;
+}

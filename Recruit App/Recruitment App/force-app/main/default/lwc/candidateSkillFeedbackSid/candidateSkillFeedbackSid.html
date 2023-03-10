@@ -1,0 +1,16 @@
+<template>
+    <lightning-card  variant="Narrow"  title="Rate Candidate Based on Position-Skills" icon-name="standard:account">
+        <div class="slds-m-around_medium div-class">
+            <lightning-datatable
+            key-field="Id"
+            data={candidatePosSkills}
+            show-row-number-column
+            hide-checkbox-column
+            draft-values={draftValues}
+            onsave={handleSave}
+            columns={columns}>
+        </lightning-datatable>
+        </div>
+    </lightning-card>
+    
+</template>
